@@ -4,77 +4,64 @@ import { io } from 'socket.io-client';
 
 function App() {
   const socket = useMemo(() => {
-    return io(process.env.REACT_APP_SERVER_URL);
+    //return io(process.env.REACT_APP_SERVER_URL);
   }, [])
 
-  const [x, setValue] = useState(0);
   const [alpha, setAlpha] = useState(0);
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
-  const [test, setTest] = useState('');
-
-  const handleMotion = (event) => {
-    const x = event.acceleration.x;
-    // console.log(event)
-    setValue(x);
-  };
+  const [message, setMessage] = useState('');
 
   const handleOrientation = (event) => {
-
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      DeviceOrientationEvent.requestPermission().then((result) => {
-        setTest(result);
-      })
-    }
-
     const alphaValue = event.alpha;
     const betaValue = event.beta;
     const gammaValue = event.gamma;
 
-    setAlpha(alphaValue);
-    setBeta(betaValue);
-    setGamma(gammaValue);
+    if (alphaValue === null || betaValue === null || gammaValue === null) {
+      setMessage("지원하지 않는 기기입니다");
+    } else {
+      setAlpha(alphaValue);
+      setBeta(betaValue);
+      setGamma(gammaValue);
+    }
   };
 
   useEffect(() => {
-    socket.emit('beta', beta);
+    //socket.emit('beta', beta);
   }, [beta, socket]);
 
   useEffect(() => {
-    socket.emit('gamma', gamma);
+    //socket.emit('gamma', gamma);
   }, [gamma, socket]);
 
 
-  useEffect(() => {
-    window.addEventListener('devicemotion', handleMotion, false);
-    window.addEventListener('deviceorientation', handleOrientation, false);
-  }, []);
-
-
-  // useEffect(() => {
-    
-  // }, [x, alpha, beta, gamma]);
-
-  // function handleMotion(event) {
-  //   console.log(event);
-  // }
-
-  // window.addEventListener('devicemotion', handleMotion);
+  const permission = () => {
+    if (typeof DeviceOrientationEvent !== "undefined") {
+      if (typeof DeviceMotionEvent.requestPermission === "function") {
+        DeviceMotionEvent.requestPermission().then((response) => {
+          if (response === "granted") {
+            window.addEventListener("deviceorientation", handleOrientation, false);
+          }
+        })
+      } else {
+        window.addEventListener("deviceorientation", handleOrientation, false);
+      }
+    } else {
+      alert("지원하지 않는 기기입니다");
+    }
+  };
 
   const handleButtonClick = () => {
-    const response = new Date();
-    socket.emit('button', response);
+    permission();
   }
 
   return (
     <>
       <h1>Hello world</h1>
-      <p id='temp'></p>
-      <p>{x}</p>
       <p>알파_팽이: {alpha}</p>
       <p>베타_넘어지기: {beta}</p>
       <p>감마_뒤집기: {gamma}</p>
-      <p>TEST: {test}</p>
+      <p>{message}</p>
       <button onClick={handleButtonClick}>버튼</button>
     </>
   );
