@@ -11,6 +11,7 @@ function App() {
   const [alpha, setAlpha] = useState(0);
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
+  const [test, setTest] = useState('');
 
   const handleMotion = (event) => {
     const x = event.acceleration.x;
@@ -19,6 +20,13 @@ function App() {
   };
 
   const handleOrientation = (event) => {
+
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission().then((result) => {
+        setTest(result);
+      })
+    }
+
     const alphaValue = event.alpha;
     const betaValue = event.beta;
     const gammaValue = event.gamma;
@@ -66,6 +74,7 @@ function App() {
       <p>알파_팽이: {alpha}</p>
       <p>베타_넘어지기: {beta}</p>
       <p>감마_뒤집기: {gamma}</p>
+      <p>TEST: {test}</p>
       <button onClick={handleButtonClick}>버튼</button>
     </>
   );
