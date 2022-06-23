@@ -33,6 +33,11 @@ function App() {
   }, [beta, socket]);
 
   useEffect(() => {
+    socket.emit('gamma', gamma);
+  }, [gamma, socket]);
+
+
+  useEffect(() => {
     window.addEventListener('devicemotion', handleMotion, false);
     window.addEventListener('deviceorientation', handleOrientation, false);
   }, []);
