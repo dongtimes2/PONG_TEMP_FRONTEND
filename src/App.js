@@ -29,11 +29,15 @@ function App() {
   };
 
   useEffect(() => {
+    socket.emit('beta', beta);
+  }, [beta, socket]);
+
+  useEffect(() => {
     window.addEventListener('devicemotion', handleMotion, false);
     window.addEventListener('deviceorientation', handleOrientation, false);
   }, []);
 
-  
+
   // useEffect(() => {
     
   // }, [x, alpha, beta, gamma]);
