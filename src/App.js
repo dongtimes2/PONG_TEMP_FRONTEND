@@ -31,7 +31,12 @@ function App() {
   useEffect(() => {
     window.addEventListener('devicemotion', handleMotion, false);
     window.addEventListener('deviceorientation', handleOrientation, false);
-  }, [x, alpha, beta, gamma]);
+  }, []);
+
+  
+  // useEffect(() => {
+    
+  // }, [x, alpha, beta, gamma]);
 
   // function handleMotion(event) {
   //   console.log(event);
