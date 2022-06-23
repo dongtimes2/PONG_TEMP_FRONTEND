@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 
 function App() {
   const socket = useMemo(() => {
-    //return io(process.env.REACT_APP_SERVER_URL);
+    return io(process.env.REACT_APP_SERVER_URL);
   }, [])
 
   const [alpha, setAlpha] = useState(0);
@@ -27,11 +27,11 @@ function App() {
   };
 
   useEffect(() => {
-    //socket.emit('beta', beta);
+    socket.emit('beta', beta);
   }, [beta, socket]);
 
   useEffect(() => {
-    //socket.emit('gamma', gamma);
+    socket.emit('gamma', gamma);
   }, [gamma, socket]);
 
 
