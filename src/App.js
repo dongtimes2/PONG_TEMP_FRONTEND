@@ -22,17 +22,11 @@ function App() {
 
   const topBorder = useRef(0);
   const bottomBorder = useRef(0);
+  const leftBorder = useRef(0);
+  const rightBorder = useRef(0);
+
   const status = useRef(true);
   const status2 = useRef(true);
-
-  // const leftBorder = useRef(0);
-  // const rightBorder = useRef(0);
-
-  //let topBorder = startY - 100;
-  //let bottomBorder = startY + 100;
-  //let leftBorder = startX - 100;
-  //let rightBorder = startX + 100;
-  //let status = true;
 
   const handleOrientation = (event) => {
     const alphaValue = parseInt(event.alpha);
@@ -40,7 +34,7 @@ function App() {
     const gammaValue = parseInt(event.gamma);
     status2.current = true;
 
-    if (betaValue === null || gammaValue === null) {
+    if (isNaN(alphaValue || betaValue || gammaValue)) {
       setMessage("지원하지 않는 기기입니다");
     } else {
       alpha.current = alphaValue;
@@ -54,8 +48,10 @@ function App() {
       status.current = false;
     }
 
-    topBorder.current = startY.current - 20;
-    bottomBorder.current = startY.current + 20;
+    topBorder.current = startY.current - 17;
+    bottomBorder.current = startY.current + 17;
+    leftBorder.current = startX.current - 17;
+    rightBorder.current = startX.current + 17;
 
     //console.log("팽이", alpha.current);
     // console.log("넘어지기", beta.current);
@@ -67,6 +63,10 @@ function App() {
       setWord("하");
     } else if (beta.current > bottomBorder.current) {
       setWord("상");
+    } else if (alpha.current < leftBorder.current) {
+      setWord("좌");
+    } else if (alpha.current > rightBorder.current) {
+      setWord("우");
     } else {
       status2.current = false;
     }
@@ -75,10 +75,6 @@ function App() {
       startX.current = alpha.current;
       startY.current = beta.current;
     }
-  };
-
-  const handleMotion = (event) => {
-    console.log(event.accelerationIncludingGravity);
   };
 
   const permission = () => {
@@ -91,13 +87,9 @@ function App() {
               handleOrientation,
               false
             );
-
-            window.addEventListener("devicemotion", handleMotion, false);
           }
         });
       } else {
-        console.log("뒤");
-        window.addEventListener("devicemotion", handleMotion);
         window.addEventListener("deviceorientation", handleOrientation, false);
       }
     } else {
