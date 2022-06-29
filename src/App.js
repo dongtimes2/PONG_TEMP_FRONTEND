@@ -54,8 +54,8 @@ function App() {
       status.current = false;
     }
 
-    topBorder.current = startY.current - 10;
-    bottomBorder.current = startY.current + 10;
+    topBorder.current = startY.current - 15;
+    bottomBorder.current = startY.current + 15;
 
     //console.log("팽이", alpha.current);
     console.log("넘어지기", beta.current);
@@ -64,9 +64,9 @@ function App() {
     console.log("바텀바", bottomBorder.current);
 
     if (beta.current < topBorder.current) {
-      setWord("상");
-    } else if (beta.current > bottomBorder.current) {
       setWord("하");
+    } else if (beta.current > bottomBorder.current) {
+      setWord("상");
     } else {
       status2.current = false;
     }
