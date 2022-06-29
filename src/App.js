@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef } from "react";
 import "./App.css";
 //import { io } from "socket.io-client";
 
@@ -30,71 +30,65 @@ function App() {
 
   const lastInput = useRef("");
 
-  console.log(memory);
+  const handleOrientation = (event) => {
+    const alphaValue = parseInt(event.alpha);
+    const betaValue = parseInt(event.beta);
+    const gammaValue = parseInt(event.gamma);
+    status2.current = true;
 
-  const handleOrientation = useCallback(
-    (event) => {
-      console.log(mode);
-      const alphaValue = parseInt(event.alpha);
-      const betaValue = parseInt(event.beta);
-      const gammaValue = parseInt(event.gamma);
-      status2.current = true;
+    if (isNaN(alphaValue || betaValue || gammaValue)) {
+      setMessage("지원하지 않는 기기입니다");
+    } else {
+      alpha.current = alphaValue;
+      beta.current = betaValue;
+      gamma.current = gammaValue;
+    }
 
-      if (isNaN(alphaValue || betaValue || gammaValue)) {
-        setMessage("지원하지 않는 기기입니다");
-      } else {
-        alpha.current = alphaValue;
-        beta.current = betaValue;
-        gamma.current = gammaValue;
+    if (status.current) {
+      startX.current = alpha.current;
+      startY.current = beta.current;
+      status.current = false;
+    }
+
+    topBorder.current = startY.current + 15;
+    bottomBorder.current = startY.current - 15;
+
+    if (alpha.current > 180) {
+      alpha.current -= 361;
+    }
+
+    leftBorder.current = startX.current + 11;
+    rightBorder.current = startX.current - 11;
+
+    if (beta.current > topBorder.current) {
+      if (lastInput.current !== "상") {
+        lastInput.current = "상";
+        setMemory((prev) => [...prev, "상"]);
       }
-
-      if (status.current) {
-        startX.current = alpha.current;
-        startY.current = beta.current;
-        status.current = false;
+    } else if (beta.current < bottomBorder.current) {
+      if (lastInput.current !== "하") {
+        lastInput.current = "하";
+        setMemory((prev) => [...prev, "하"]);
       }
-
-      topBorder.current = startY.current + 15;
-      bottomBorder.current = startY.current - 15;
-
-      if (alpha.current > 180) {
-        alpha.current -= 361;
+    } else if (alpha.current > leftBorder.current) {
+      if (lastInput.current !== "좌") {
+        lastInput.current = "좌";
+        setMemory((prev) => [...prev, "좌"]);
       }
-
-      leftBorder.current = startX.current + 11;
-      rightBorder.current = startX.current - 11;
-
-      if (beta.current > topBorder.current) {
-        if (lastInput.current !== "상") {
-          lastInput.current = "상";
-          setMemory((prev) => [...prev, "상"]);
-        }
-      } else if (beta.current < bottomBorder.current) {
-        if (lastInput.current !== "하") {
-          lastInput.current = "하";
-          setMemory((prev) => [...prev, "하"]);
-        }
-      } else if (alpha.current > leftBorder.current) {
-        if (lastInput.current !== "좌") {
-          lastInput.current = "좌";
-          setMemory((prev) => [...prev, "좌"]);
-        }
-      } else if (alpha.current < rightBorder.current) {
-        if (lastInput.current !== "우") {
-          lastInput.current = "우";
-          setMemory((prev) => [...prev, "우"]);
-        }
-      } else {
-        status2.current = false;
+    } else if (alpha.current < rightBorder.current) {
+      if (lastInput.current !== "우") {
+        lastInput.current = "우";
+        setMemory((prev) => [...prev, "우"]);
       }
+    } else {
+      status2.current = false;
+    }
 
-      if (status2.current) {
-        startX.current = alpha.current;
-        startY.current = beta.current;
-      }
-    },
-    [mode]
-  );
+    if (status2.current) {
+      startX.current = alpha.current;
+      startY.current = beta.current;
+    }
+  };
 
   const permission = () => {
     if (typeof DeviceOrientationEvent !== "undefined") {
@@ -134,6 +128,10 @@ function App() {
   const handleMode = () => {
     setMode((mode) => !mode);
   };
+
+  if (memory.length > 3) {
+    reset();
+  }
 
   return (
     <>
