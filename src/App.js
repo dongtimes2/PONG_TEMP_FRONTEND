@@ -35,6 +35,10 @@ function App() {
     const gammaValue = parseInt(event.gamma);
     status2.current = true;
 
+    console.log("알파", alpha.current);
+    console.log("좌", leftBorder.current);
+    console.log("우", rightBorder.current);
+
     if (isNaN(alphaValue || betaValue || gammaValue)) {
       setMessage("지원하지 않는 기기입니다");
     } else {
