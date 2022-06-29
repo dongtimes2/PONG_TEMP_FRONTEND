@@ -13,16 +13,16 @@ function App() {
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
   const [message, setMessage] = useState("");
-  const [word, setWord] = useState("");
+  //const [word, setWord] = useState("");
   // const [isinitial, setIsinitial] = useState(true);
 
-  let startX = 0;
-  let startY = 0;
+  //let startX = 0;
+  //let startY = 0;
 
-  let topBorder = startY - 100;
-  let bottomBorder = startY + 100;
-  let leftBorder = startX - 100;
-  let rightBorder = startX + 100;
+  //let topBorder = startY - 100;
+  //let bottomBorder = startY + 100;
+  //let leftBorder = startX - 100;
+  //let rightBorder = startX + 100;
   //let status = true;
 
   const handleOrientation = (event) => {
@@ -111,7 +111,7 @@ function App() {
       <p>베타_넘어지기: {beta}</p>
       <p>감마_뒤집기: {gamma}</p>
       <p>{message}</p>
-      <p>{word}</p>
+      {/* <p>{word}</p> */}
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
