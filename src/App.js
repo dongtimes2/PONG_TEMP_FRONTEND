@@ -9,19 +9,20 @@ function App() {
   }, []);
 */
 
-  // const [alpha, setAlpha] = useState(0);
-  // const [beta, setBeta] = useState(0);
-  // const [gamma, setGamma] = useState(0);
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState(true);
+
   const alpha = useRef(0);
   const beta = useRef(0);
   const gamma = useRef(0);
+  const startX = useRef(0);
+  const startY = useRef(0);
 
+  const topBorder = useRef(0);
+  const bottomBorder = useRef(0);
+  // const leftBorder = useRef(0);
+  // const rightBorder = useRef(0);
   //const [word, setWord] = useState("");
-  // const [isinitial, setIsinitial] = useState(true);
-
-  //let startX = 0;
-  //let startY = 0;
 
   //let topBorder = startY - 100;
   //let bottomBorder = startY + 100;
@@ -42,9 +43,20 @@ function App() {
       gamma.current = gammaValue;
     }
 
-    console.log(alpha.current);
-    console.log(beta.current);
-    console.log(gamma.current);
+    if (status) {
+      startX.current = alpha.current;
+      startY.current = beta.current;
+      setStatus(false);
+    }
+
+    topBorder.current = startY.current - 10;
+    bottomBorder.current = startY.current + 10;
+
+    console.log("팽이", alpha.current);
+    console.log("넘어지기", beta.current);
+    console.log("뒤집기", gamma.current);
+    console.log("탑바", topBorder.current);
+    console.log("바텀바", bottomBorder.current);
   };
 
   /*
@@ -119,6 +131,7 @@ function App() {
       {/* <p>베타_넘어지기: {beta}</p> */}
       {/* <p>감마_뒤집기: {gamma}</p> */}
       <p>{message}</p>
+      <p>{status}</p>
       {/* <p>{word}</p> */}
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
