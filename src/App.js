@@ -38,6 +38,7 @@ function App() {
     const alphaValue = parseInt(event.alpha);
     const betaValue = parseInt(event.beta);
     const gammaValue = parseInt(event.gamma);
+    status2.current = true;
 
     if (betaValue === null || gammaValue === null) {
       setMessage("지원하지 않는 기기입니다");
@@ -56,9 +57,9 @@ function App() {
     topBorder.current = startY.current - 10;
     bottomBorder.current = startY.current + 10;
 
-    console.log("팽이", alpha.current);
+    //console.log("팽이", alpha.current);
     console.log("넘어지기", beta.current);
-    console.log("뒤집기", gamma.current);
+    //console.log("뒤집기", gamma.current);
     console.log("탑바", topBorder.current);
     console.log("바텀바", bottomBorder.current);
 
