@@ -110,7 +110,7 @@ function App() {
       <p>베타_넘어지기: {beta}</p>
       <p>감마_뒤집기: {gamma}</p>
       <p>{message}</p>
-      {/* <p>{word}</p> */}
+      <p>{word}</p>
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
