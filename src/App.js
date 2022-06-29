@@ -28,8 +28,6 @@ function App() {
   const status = useRef(true);
   const status2 = useRef(true);
 
-  console.log("멤", memory);
-
   const handleOrientation = (event) => {
     const alphaValue = parseInt(event.alpha);
     const betaValue = parseInt(event.beta);
@@ -61,16 +59,24 @@ function App() {
     rightBorder.current = startX.current - 11;
 
     if (beta.current > topBorder.current) {
-      setMemory((prev) => [...prev, "상"]);
+      if (memory[memory.length - 1] !== "상") {
+        setMemory((prev) => [...prev, "상"]);
+      }
       // setWord("상");
     } else if (beta.current < bottomBorder.current) {
-      setMemory((prev) => [...prev, "하"]);
+      if (memory[memory.length - 1] !== "하") {
+        setMemory((prev) => [...prev, "하"]);
+      }
       // setWord("하");
     } else if (alpha.current > leftBorder.current) {
-      setMemory((prev) => [...prev, "좌"]);
+      if (memory[memory.length - 1] !== "좌") {
+        setMemory((prev) => [...prev, "좌"]);
+      }
       // setWord("좌");
     } else if (alpha.current < rightBorder.current) {
-      setMemory((prev) => [...prev, "우"]);
+      if (memory[memory.length - 1] !== "우") {
+        setMemory((prev) => [...prev, "우"]);
+      }
       // setWord("우");
     } else {
       status2.current = false;
@@ -80,8 +86,6 @@ function App() {
       startX.current = alpha.current;
       startY.current = beta.current;
     }
-
-    console.log(memory);
   };
 
   const permission = () => {
@@ -115,7 +119,6 @@ function App() {
     ]);
   };
 
-  console.log(memory);
   return (
     <>
       <h1>Hello world</h1>
