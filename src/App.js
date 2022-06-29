@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { io } from "socket.io-client";
