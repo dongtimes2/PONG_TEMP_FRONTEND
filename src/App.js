@@ -59,7 +59,8 @@ function App() {
   };
 
   const handleViveClick = () => {
-    window.navigator.vibrate(200);
+    console.log(window.navigator);
+    window.navigator.vibrate([200, 10, 200, 10, 500]);
   };
 
   return (
@@ -70,7 +71,7 @@ function App() {
       <p>감마_뒤집기: {gamma}</p>
       <p>{message}</p>
       <button onClick={handleButtonClick}>버튼</button>
-      <button onClick={handleViveClick}></button>
+      <button onClick={handleViveClick}>진동버튼</button>
     </>
   );
 }
