@@ -10,8 +10,8 @@ function App() {
 */
 
   const [message, setMessage] = useState("");
-  // const [status, setStatus] = useState(true);
   const [word, setWord] = useState("");
+  const [memory, setMemory] = useState([]);
 
   const alpha = useRef(0);
   const beta = useRef(0);
@@ -59,22 +59,26 @@ function App() {
     rightBorder.current = startX.current - 11;
 
     // console.log("팽이", alpha.current); //344
-    console.log("넘어지기", beta.current);
+    // console.log("넘어지기", beta.current);
     //console.log("뒤집기", gamma.current);
-    console.log("탑바", topBorder.current);
-    console.log("바텀바", bottomBorder.current);
+    // console.log("탑바", topBorder.current);
+    // console.log("바텀바", bottomBorder.current);
 
     // console.log("레프트", leftBorder.current); //355
     // console.log("라이트", rightBorder.current); //333
 
     if (beta.current > topBorder.current) {
       setWord("상");
+      setMemory([...memory, "상"]);
     } else if (beta.current < bottomBorder.current) {
       setWord("하");
+      setMemory([...memory, "하"]);
     } else if (alpha.current > leftBorder.current) {
       setWord("좌");
+      setMemory([...memory, "좌"]);
     } else if (alpha.current < rightBorder.current) {
       setWord("우");
+      setMemory([...memory, "우"]);
     } else {
       status2.current = false;
     }
@@ -123,11 +127,13 @@ function App() {
       {/* <p>베타_넘어지기: {beta}</p> */}
       {/* <p>감마_뒤집기: {gamma}</p> */}
       <p>{message}</p>
-      {status ? <p>트루</p> : <p>폴스</p>}
       <h1>{word}</h1>
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
+      {memory.map((element) => (
+        <p>{element}</p>
+      ))}
     </>
   );
 }
