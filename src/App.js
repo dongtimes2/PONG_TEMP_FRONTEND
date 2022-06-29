@@ -50,8 +50,8 @@ function App() {
 
     topBorder.current = startY.current - 17;
     bottomBorder.current = startY.current + 17;
-    leftBorder.current = startX.current - 17;
-    rightBorder.current = startX.current + 17;
+    leftBorder.current = startX.current + 17;
+    rightBorder.current = startX.current - 17;
 
     console.log("팽이", alpha.current);
     // console.log("넘어지기", beta.current);
@@ -67,9 +67,9 @@ function App() {
     } else if (beta.current > bottomBorder.current) {
       setWord("상");
     } else if (alpha.current < leftBorder.current) {
-      setWord("우");
-    } else if (alpha.current > rightBorder.current) {
       setWord("좌");
+    } else if (alpha.current > rightBorder.current) {
+      setWord("우");
     } else {
       status2.current = false;
     }
