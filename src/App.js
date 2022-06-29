@@ -4,13 +4,25 @@ import { io } from "socket.io-client";
 
 function App() {
   const socket = useMemo(() => {
-    return io(process.env.REACT_APP_SERVER_URL);
+    // return io(process.env.REACT_APP_SERVER_URL);
   }, []);
 
   const [alpha, setAlpha] = useState(0);
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
   const [message, setMessage] = useState("");
+  const [word, setWord] = useState("");
+  const [isinitial, setIsinitial] = useState(true);
+
+  let startX = 0;
+  let startY = 0;
+  let input = [];
+
+  let topBorder = startY - 100;
+  let bottomBorder = startY + 100;
+  let leftBorder = startX - 100;
+  let rightBorder = startX + 100;
+  let status = true;
 
   const handleOrientation = (event) => {
     const alphaValue = parseInt(event.alpha);
@@ -26,6 +38,24 @@ function App() {
     }
   };
 
+  if (alpha < leftBorder) {
+    setWord("왼");
+  } else if (alpha > rightBorder) {
+    setWord("오");
+  } else if (beta < topBorder) {
+    setWord("상");
+  } else if (beta > bottomBorder) {
+    setWord("하");
+  } else {
+    status = false;
+  }
+
+  if (status) {
+    startX = alpha;
+    startY = beta;
+  }
+
+  /*
   useEffect(() => {
     socket.emit("alpha", alpha);
   }, [alpha, socket]);
@@ -37,6 +67,7 @@ function App() {
   useEffect(() => {
     socket.emit("gamma", gamma);
   }, [gamma, socket]);
+*/
 
   const permission = () => {
     if (typeof DeviceOrientationEvent !== "undefined") {
@@ -77,6 +108,8 @@ function App() {
       <p>베타_넘어지기: {beta}</p>
       <p>감마_뒤집기: {gamma}</p>
       <p>{message}</p>
+      <p>{word}</p>
+      <p>{leftBorder}</p>
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
     </>
