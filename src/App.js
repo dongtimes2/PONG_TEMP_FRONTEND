@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from 'react';
-import './App.css';
-import { io } from 'socket.io-client';
+import { useEffect, useMemo, useState } from "react";
+import "./App.css";
+import { io } from "socket.io-client";
 
 function App() {
   const socket = useMemo(() => {
     return io(process.env.REACT_APP_SERVER_URL);
-  }, [])
+  }, []);
 
   //const [alpha, setAlpha] = useState(0);
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleOrientation = (event) => {
     // const alphaValue = event.alpha;
@@ -27,22 +27,25 @@ function App() {
   };
 
   useEffect(() => {
-    socket.emit('beta', beta);
+    socket.emit("beta", beta);
   }, [beta, socket]);
 
   useEffect(() => {
-    socket.emit('gamma', gamma);
+    socket.emit("gamma", gamma);
   }, [gamma, socket]);
-
 
   const permission = () => {
     if (typeof DeviceOrientationEvent !== "undefined") {
       if (typeof DeviceMotionEvent.requestPermission === "function") {
         DeviceMotionEvent.requestPermission().then((response) => {
           if (response === "granted") {
-            window.addEventListener("deviceorientation", handleOrientation, false);
+            window.addEventListener(
+              "deviceorientation",
+              handleOrientation,
+              false
+            );
           }
-        })
+        });
       } else {
         window.addEventListener("deviceorientation", handleOrientation, false);
       }
@@ -53,7 +56,11 @@ function App() {
 
   const handleButtonClick = () => {
     permission();
-  }
+  };
+
+  const handleViveClick = () => {
+    window.navigator.vibrate(200);
+  };
 
   return (
     <>
@@ -63,6 +70,7 @@ function App() {
       <p>감마_뒤집기: {gamma}</p>
       <p>{message}</p>
       <button onClick={handleButtonClick}>버튼</button>
+      <button onClick={handleViveClick}></button>
     </>
   );
 }
