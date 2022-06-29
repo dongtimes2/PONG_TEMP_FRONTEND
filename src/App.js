@@ -67,9 +67,9 @@ function App() {
     } else if (beta.current > bottomBorder.current) {
       setWord("상");
     } else if (alpha.current < leftBorder.current) {
-      setWord("좌");
-    } else if (alpha.current > rightBorder.current) {
       setWord("우");
+    } else if (alpha.current > rightBorder.current) {
+      setWord("좌");
     } else {
       status2.current = false;
     }
