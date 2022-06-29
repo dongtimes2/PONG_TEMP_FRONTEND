@@ -112,8 +112,8 @@ function App() {
 
   const permission = () => {
     if (typeof DeviceOrientationEvent !== "undefined") {
-      if (typeof DeviceMotionEvent.requestPermission === "function") {
-        DeviceMotionEvent.requestPermission().then((response) => {
+      if (typeof DeviceOrientationEvent.requestPermission === "function") {
+        DeviceOrientationEvent.requestPermission().then((response) => {
           if (response === "granted") {
             window.addEventListener(
               "deviceorientation",
@@ -150,7 +150,7 @@ function App() {
       {/* <p>감마_뒤집기: {gamma}</p> */}
       <p>{message}</p>
       {status ? <p>트루</p> : <p>폴스</p>}
-      <p>{word}</p>
+      <h1>{word}</h1>
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
