@@ -122,7 +122,9 @@ function App() {
 
   const handleMode = () => {
     console.log("ee");
+    reset();
     window.removeEventListener("deviceorientation", handleOrientation);
+    lastInput.current = "";
   };
 
   if (memory.length > 3) {
