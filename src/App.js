@@ -7,24 +7,28 @@ function App() {
     return io(process.env.REACT_APP_SERVER_URL);
   }, []);
 
-  //const [alpha, setAlpha] = useState(0);
+  const [alpha, setAlpha] = useState(0);
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
   const [message, setMessage] = useState("");
 
   const handleOrientation = (event) => {
-    // const alphaValue = event.alpha;
+    const alphaValue = parseInt(event.alpha);
     const betaValue = parseInt(event.beta);
     const gammaValue = parseInt(event.gamma);
 
     if (betaValue === null || gammaValue === null) {
       setMessage("지원하지 않는 기기입니다");
     } else {
-      //setAlpha(alphaValue);
+      setAlpha(alphaValue);
       setBeta(betaValue);
       setGamma(gammaValue);
     }
   };
+
+  useEffect(() => {
+    socket.emit("alpha", alpha);
+  }, [alpha, socket]);
 
   useEffect(() => {
     socket.emit("beta", beta);
@@ -60,13 +64,16 @@ function App() {
 
   const handleViveClick = () => {
     console.log(window.navigator);
-    window.navigator.vibrate([200, 10, 200, 10, 500]);
+    window.navigator.vibrate([
+      100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30,
+      100,
+    ]);
   };
 
   return (
     <>
       <h1>Hello world</h1>
-      {/* <p>알파_팽이: {alpha}</p> */}
+      <p>알파_팽이: {alpha}</p>
       <p>베타_넘어지기: {beta}</p>
       <p>감마_뒤집기: {gamma}</p>
       <p>{message}</p>
