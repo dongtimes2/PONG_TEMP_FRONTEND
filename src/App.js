@@ -48,8 +48,8 @@ function App() {
       status.current = false;
     }
 
-    topBorder.current = startY.current - 15;
-    bottomBorder.current = startY.current + 15;
+    topBorder.current = startY.current + 15;
+    bottomBorder.current = startY.current - 15;
 
     if (alpha.current > 180) {
       alpha.current -= 361;
@@ -67,10 +67,10 @@ function App() {
     // console.log("레프트", leftBorder.current); //355
     // console.log("라이트", rightBorder.current); //333
 
-    if (beta.current < topBorder.current) {
-      setWord("하");
-    } else if (beta.current > bottomBorder.current) {
+    if (beta.current > topBorder.current) {
       setWord("상");
+    } else if (beta.current < bottomBorder.current) {
+      setWord("하");
     } else if (alpha.current > leftBorder.current) {
       setWord("좌");
     } else if (alpha.current < rightBorder.current) {
