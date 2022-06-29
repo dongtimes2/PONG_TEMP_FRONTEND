@@ -35,10 +35,6 @@ function App() {
     const gammaValue = parseInt(event.gamma);
     status2.current = true;
 
-    console.log("알파", alpha.current);
-    console.log("좌", leftBorder.current);
-    console.log("우", rightBorder.current);
-
     if (isNaN(alphaValue || betaValue || gammaValue)) {
       setMessage("지원하지 않는 기기입니다");
     } else {
@@ -121,16 +117,24 @@ function App() {
   };
 
   const reset = () => {
+    lastInput.current = "";
     setMemory([]);
   };
 
   const handleMode = () => {
-    console.log("ee");
     reset();
-    window.removeEventListener("deviceorientation", handleOrientation);
-    lastInput.current = "";
+
     status.current = true;
+    window.removeEventListener("deviceorientation", handleOrientation);
   };
+
+  if (memory.length >= 2) {
+    if (memory[0] === "상" && memory[1] === "우") {
+      setMessage("감지");
+    }
+
+    reset();
+  }
 
   return (
     <>
