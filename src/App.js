@@ -60,21 +60,25 @@ function App() {
 
     if (beta.current > topBorder.current) {
       if (memory[memory.length - 1] !== "상") {
+        console.log(memory[memory.length - 1]);
         setMemory((prev) => [...prev, "상"]);
       }
       // setWord("상");
     } else if (beta.current < bottomBorder.current) {
       if (memory[memory.length - 1] !== "하") {
+        console.log(memory[memory.length - 1]);
         setMemory((prev) => [...prev, "하"]);
       }
       // setWord("하");
     } else if (alpha.current > leftBorder.current) {
       if (memory[memory.length - 1] !== "좌") {
+        console.log(memory[memory.length - 1]);
         setMemory((prev) => [...prev, "좌"]);
       }
       // setWord("좌");
     } else if (alpha.current < rightBorder.current) {
       if (memory[memory.length - 1] !== "우") {
+        console.log(memory[memory.length - 1]);
         setMemory((prev) => [...prev, "우"]);
       }
       // setWord("우");
