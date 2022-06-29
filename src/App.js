@@ -28,6 +28,8 @@ function App() {
   const status = useRef(true);
   const status2 = useRef(true);
 
+  console.log(memory);
+
   const handleOrientation = (event) => {
     const alphaValue = parseInt(event.alpha);
     const betaValue = parseInt(event.beta);
@@ -98,6 +100,8 @@ function App() {
       startX.current = alpha.current;
       startY.current = beta.current;
     }
+
+    console.log(memory);
   };
 
   const permission = () => {
