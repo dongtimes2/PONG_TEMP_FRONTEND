@@ -97,8 +97,8 @@ function App() {
         });
       } else {
         console.log("뒤");
-        window.addEventListener("deviceorientation", handleOrientation, false);
-        window.addEventListener("devicemotion", handleMotion, false);
+        window.addEventListener("devicemotion", handleMotion);
+        window.addEventListener("deviceorientation", handleOrientation);
       }
     } else {
       alert("지원하지 않는 기기입니다");
