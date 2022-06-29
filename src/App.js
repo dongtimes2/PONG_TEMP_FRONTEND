@@ -39,6 +39,7 @@ function App() {
     }
   };
 
+  /*
   if (alpha < leftBorder) {
     setWord("왼");
   } else if (alpha > rightBorder) {
