@@ -53,22 +53,22 @@ function App() {
     leftBorder.current = startX.current + 11;
     rightBorder.current = startX.current - 11;
 
-    console.log("팽이", alpha.current);
+    console.log("팽이", alpha.current); //344
     // console.log("넘어지기", beta.current);
     //console.log("뒤집기", gamma.current);
     // console.log("탑바", topBorder.current);
     // console.log("바텀바", bottomBorder.current);
 
-    console.log("레프트", leftBorder.current);
-    console.log("라이트", rightBorder.current);
+    console.log("레프트", leftBorder.current); //355
+    console.log("라이트", rightBorder.current); //333
 
     if (beta.current < topBorder.current) {
       setWord("하");
     } else if (beta.current > bottomBorder.current) {
       setWord("상");
-    } else if (alpha.current < leftBorder.current) {
+    } else if (alpha.current > leftBorder.current) {
       setWord("좌");
-    } else if (alpha.current > rightBorder.current) {
+    } else if (alpha.current < rightBorder.current) {
       setWord("우");
     } else {
       status2.current = false;
