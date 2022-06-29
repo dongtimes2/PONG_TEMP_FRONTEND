@@ -96,6 +96,7 @@ function App() {
           }
         });
       } else {
+        console.log("뒤");
         window.addEventListener("deviceorientation", handleOrientation, false);
         window.addEventListener("devicemotion", handleMotion, false);
       }
@@ -109,7 +110,6 @@ function App() {
   };
 
   const handleViveClick = () => {
-    console.log(window.navigator);
     window.navigator.vibrate([
       100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30,
       100,
