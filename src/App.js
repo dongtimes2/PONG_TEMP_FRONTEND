@@ -68,17 +68,17 @@ function App() {
     // console.log("라이트", rightBorder.current); //333
 
     if (beta.current > topBorder.current) {
-      setWord("상");
       setMemory([...memory, "상"]);
+      setWord("상");
     } else if (beta.current < bottomBorder.current) {
-      setWord("하");
       setMemory([...memory, "하"]);
+      setWord("하");
     } else if (alpha.current > leftBorder.current) {
-      setWord("좌");
       setMemory([...memory, "좌"]);
+      setWord("좌");
     } else if (alpha.current < rightBorder.current) {
-      setWord("우");
       setMemory([...memory, "우"]);
+      setWord("우");
     } else {
       status2.current = false;
     }
