@@ -28,6 +28,8 @@ function App() {
   const status = useRef(true);
   const status2 = useRef(true);
 
+  const lastInput = useRef("");
+
   console.log(memory);
 
   const handleOrientation = (event) => {
@@ -61,34 +63,26 @@ function App() {
     rightBorder.current = startX.current - 11;
 
     if (beta.current > topBorder.current) {
-      if (memory[memory.length - 1] !== "상") {
-        console.log(memory);
-        console.log(memory.length);
-        console.log(memory[memory.length - 1]);
+      if (lastInput.current !== "상") {
+        lastInput.current = "상";
         setMemory((prev) => [...prev, "상"]);
       }
       // setWord("상");
     } else if (beta.current < bottomBorder.current) {
-      if (memory[memory.length - 1] !== "하") {
-        console.log(memory);
-        console.log(memory.length);
-        console.log(memory[memory.length - 1]);
+      if (lastInput.current !== "하") {
+        lastInput.current = "하";
         setMemory((prev) => [...prev, "하"]);
       }
       // setWord("하");
     } else if (alpha.current > leftBorder.current) {
-      if (memory[memory.length - 1] !== "좌") {
-        console.log(memory);
-        console.log(memory.length);
-        console.log(memory[memory.length - 1]);
+      if (lastInput.current !== "좌") {
+        lastInput.current = "좌";
         setMemory((prev) => [...prev, "좌"]);
       }
       // setWord("좌");
     } else if (alpha.current < rightBorder.current) {
-      if (memory[memory.length - 1] !== "우") {
-        console.log(memory);
-        console.log(memory.length);
-        console.log(memory[memory.length - 1]);
+      if (lastInput.current !== "우") {
+        lastInput.current = "우";
         setMemory((prev) => [...prev, "우"]);
       }
       // setWord("우");
@@ -100,8 +94,6 @@ function App() {
       startX.current = alpha.current;
       startY.current = beta.current;
     }
-
-    console.log(memory);
   };
 
   const permission = () => {
@@ -135,6 +127,10 @@ function App() {
     ]);
   };
 
+  const reset = () => {
+    setMemory([]);
+  };
+
   return (
     <>
       <h1>Hello world</h1>
@@ -146,6 +142,7 @@ function App() {
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
+      <button onClick={reset}></button>
       {memory.map((element) => (
         <p>{element}</p>
       ))}
