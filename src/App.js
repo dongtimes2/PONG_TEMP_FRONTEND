@@ -11,7 +11,6 @@ function App() {
 
   const [message, setMessage] = useState("");
   const [memory, setMemory] = useState([]);
-  const [mode, setMode] = useState(false);
 
   const alpha = useRef(0);
   const beta = useRef(0);
@@ -126,7 +125,7 @@ function App() {
   };
 
   const handleMode = () => {
-    setMode((mode) => !mode);
+    window.removeEventListener("deviceorientation", handleOrientation, false);
   };
 
   if (memory.length > 3) {
@@ -144,7 +143,6 @@ function App() {
       <button onClick={handleViveClick}>진동버튼</button>
       <button onClick={reset}>클리어</button>
       <button onClick={handleMode}>모드 변경</button>
-      {mode ? <p>활성화</p> : <p>비활성화</p>}
       {memory.map((element) => (
         <p>{element}</p>
       ))}
