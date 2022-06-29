@@ -117,11 +117,11 @@ function App() {
   };
 
   const reset = () => {
-    lastInput.current = "";
     setMemory([]);
   };
 
   const handleMode = () => {
+    lastInput.current = "";
     reset();
 
     status.current = true;
@@ -131,6 +131,8 @@ function App() {
   if (memory.length >= 2) {
     if (memory[0] === "상" && memory[1] === "우") {
       setMessage("감지");
+    } else {
+      setMessage("");
     }
 
     reset();
