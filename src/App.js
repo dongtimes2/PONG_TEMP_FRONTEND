@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import "./App.css";
 //import { io } from "socket.io-client";
 
@@ -29,7 +29,7 @@ function App() {
 
   const lastInput = useRef("");
 
-  const handleOrientation = (event) => {
+  const handleOrientation = useCallback((event) => {
     const alphaValue = parseInt(event.alpha);
     const betaValue = parseInt(event.beta);
     const gammaValue = parseInt(event.gamma);
@@ -87,22 +87,18 @@ function App() {
       startX.current = alpha.current;
       startY.current = beta.current;
     }
-  };
+  }, []);
 
   const permission = () => {
     if (typeof DeviceOrientationEvent !== "undefined") {
       if (typeof DeviceOrientationEvent.requestPermission === "function") {
         DeviceOrientationEvent.requestPermission().then((response) => {
           if (response === "granted") {
-            window.addEventListener(
-              "deviceorientation",
-              handleOrientation,
-              false
-            );
+            window.addEventListener("deviceorientation", handleOrientation);
           }
         });
       } else {
-        window.addEventListener("deviceorientation", handleOrientation, false);
+        window.addEventListener("deviceorientation", handleOrientation);
       }
     } else {
       alert("지원하지 않는 기기입니다");
@@ -125,6 +121,7 @@ function App() {
   };
 
   const handleMode = () => {
+    console.log("ee");
     window.removeEventListener("deviceorientation", handleOrientation);
   };
 
