@@ -128,10 +128,6 @@ function App() {
     status.current = true;
   };
 
-  if (memory.length > 3) {
-    reset();
-  }
-
   return (
     <>
       <h1>Hello world</h1>
