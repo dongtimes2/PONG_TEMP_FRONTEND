@@ -23,7 +23,7 @@ function App() {
   let bottomBorder = startY + 100;
   let leftBorder = startX - 100;
   let rightBorder = startX + 100;
-  let status = true;
+  //let status = true;
 
   const handleOrientation = (event) => {
     const alphaValue = parseInt(event.alpha);
@@ -48,14 +48,15 @@ function App() {
   } else if (beta > bottomBorder) {
     setWord("하");
   } else {
-    status = false;
+    console.log();
+    //status = false;
   }
-
+  /*
   if (status) {
     startX = alpha;
     startY = beta;
   }
-
+*/
   /*
   useEffect(() => {
     socket.emit("alpha", alpha);
@@ -109,7 +110,7 @@ function App() {
       <p>베타_넘어지기: {beta}</p>
       <p>감마_뒤집기: {gamma}</p>
       <p>{message}</p>
-      <p>{word}</p>
+      {/* <p>{word}</p> */}
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
