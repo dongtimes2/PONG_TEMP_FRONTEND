@@ -10,8 +10,8 @@ function App() {
 */
 
   const [message, setMessage] = useState("");
-  // const [word, setWord] = useState("");
   const [memory, setMemory] = useState([]);
+  const [mode, setMode] = useState(false);
 
   const alpha = useRef(0);
   const beta = useRef(0);
@@ -33,6 +33,7 @@ function App() {
   console.log(memory);
 
   const handleOrientation = (event) => {
+    console.log(mode);
     const alphaValue = parseInt(event.alpha);
     const betaValue = parseInt(event.beta);
     const gammaValue = parseInt(event.gamma);
@@ -67,25 +68,21 @@ function App() {
         lastInput.current = "상";
         setMemory((prev) => [...prev, "상"]);
       }
-      // setWord("상");
     } else if (beta.current < bottomBorder.current) {
       if (lastInput.current !== "하") {
         lastInput.current = "하";
         setMemory((prev) => [...prev, "하"]);
       }
-      // setWord("하");
     } else if (alpha.current > leftBorder.current) {
       if (lastInput.current !== "좌") {
         lastInput.current = "좌";
         setMemory((prev) => [...prev, "좌"]);
       }
-      // setWord("좌");
     } else if (alpha.current < rightBorder.current) {
       if (lastInput.current !== "우") {
         lastInput.current = "우";
         setMemory((prev) => [...prev, "우"]);
       }
-      // setWord("우");
     } else {
       status2.current = false;
     }
@@ -131,6 +128,9 @@ function App() {
     setMemory([]);
   };
 
+  const handleMode = () => {
+    setMode((mode) => !mode);
+  };
   return (
     <>
       <h1>Hello world</h1>
@@ -138,11 +138,11 @@ function App() {
       {/* <p>베타_넘어지기: {beta}</p> */}
       {/* <p>감마_뒤집기: {gamma}</p> */}
       <p>{message}</p>
-      {/* <h1>{word}</h1> */}
-      {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
-      <button onClick={reset}></button>
+      <button onClick={reset}>클리어</button>
+      <button onClick={handleMode}>모드 변경</button>
+      {mode ? <p>활성화</p> : <p>비활성화</p>}
       {memory.map((element) => (
         <p>{element}</p>
       ))}
