@@ -10,7 +10,7 @@ function App() {
 */
 
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState(true);
+  // const [status, setStatus] = useState(true);
   const [word, setWord] = useState("");
 
   const alpha = useRef(0);
@@ -22,7 +22,7 @@ function App() {
 
   const topBorder = useRef(0);
   const bottomBorder = useRef(0);
-
+  const status = useRef(true);
   const status2 = useRef(true);
 
   // const leftBorder = useRef(0);
@@ -48,10 +48,10 @@ function App() {
       gamma.current = gammaValue;
     }
 
-    if (status) {
+    if (status.current) {
       startX.current = alpha.current;
       startY.current = beta.current;
-      setStatus(false);
+      status.current = false;
     }
 
     topBorder.current = startY.current - 10;
