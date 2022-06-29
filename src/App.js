@@ -125,6 +125,7 @@ function App() {
     reset();
     window.removeEventListener("deviceorientation", handleOrientation);
     lastInput.current = "";
+    status.current = true;
   };
 
   if (memory.length > 3) {
