@@ -1,23 +1,23 @@
-/* eslint-disable */
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import { io } from "socket.io-client";
+//import { io } from "socket.io-client";
 
 function App() {
+  /*
   const socket = useMemo(() => {
-    // return io(process.env.REACT_APP_SERVER_URL);
+    return io(process.env.REACT_APP_SERVER_URL);
   }, []);
+*/
 
   const [alpha, setAlpha] = useState(0);
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
   const [message, setMessage] = useState("");
   const [word, setWord] = useState("");
-  const [isinitial, setIsinitial] = useState(true);
+  // const [isinitial, setIsinitial] = useState(true);
 
   let startX = 0;
   let startY = 0;
-  let input = [];
 
   let topBorder = startY - 100;
   let bottomBorder = startY + 100;
@@ -110,7 +110,7 @@ function App() {
       <p>감마_뒤집기: {gamma}</p>
       <p>{message}</p>
       <p>{word}</p>
-      <p>{leftBorder}</p>
+      {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
     </>
