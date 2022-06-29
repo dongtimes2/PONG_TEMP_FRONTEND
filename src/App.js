@@ -54,8 +54,8 @@ function App() {
       status.current = false;
     }
 
-    topBorder.current = startY.current - 15;
-    bottomBorder.current = startY.current + 15;
+    topBorder.current = startY.current - 20;
+    bottomBorder.current = startY.current + 20;
 
     //console.log("팽이", alpha.current);
     console.log("넘어지기", beta.current);
@@ -77,38 +77,9 @@ function App() {
     }
   };
 
-  /*
-  if (alpha < leftBorder) {
-    setWord("왼");
-  } else if (alpha > rightBorder) {
-    setWord("오");
-  } else if (beta < topBorder) {
-    setWord("상");
-  } else if (beta > bottomBorder) {
-    setWord("하");
-  } else {
-    console.log();
-    //status = false;
-  }
-  /*
-  if (status) {
-    startX = alpha;
-    startY = beta;
-  }
-*/
-  /*
-  useEffect(() => {
-    socket.emit("alpha", alpha);
-  }, [alpha, socket]);
-
-  useEffect(() => {
-    socket.emit("beta", beta);
-  }, [beta, socket]);
-
-  useEffect(() => {
-    socket.emit("gamma", gamma);
-  }, [gamma, socket]);
-*/
+  const handleMotion = (event) => {
+    console.log(event);
+  };
 
   const permission = () => {
     if (typeof DeviceOrientationEvent !== "undefined") {
@@ -120,10 +91,13 @@ function App() {
               handleOrientation,
               false
             );
+
+            window.addEventListener("devicemotion", handleMotion, false);
           }
         });
       } else {
         window.addEventListener("deviceorientation", handleOrientation, false);
+        window.addEventListener("devicemotion", handleMotion, false);
       }
     } else {
       alert("지원하지 않는 기기입니다");
@@ -159,3 +133,23 @@ function App() {
 }
 
 export default App;
+
+/*
+  if (alpha < leftBorder) {
+    setWord("왼");
+  } else if (alpha > rightBorder) {
+    setWord("오");
+  } else if (beta < topBorder) {
+    setWord("상");
+  } else if (beta > bottomBorder) {
+    setWord("하");
+  } else {
+    console.log();
+    //status = false;
+  }
+  /*
+  if (status) {
+    startX = alpha;
+    startY = beta;
+  }
+*/
