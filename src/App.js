@@ -120,6 +120,7 @@ function App() {
     ]);
   };
 
+  console.log(memory);
   return (
     <>
       <h1>Hello world</h1>
