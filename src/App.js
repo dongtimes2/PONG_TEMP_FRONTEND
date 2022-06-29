@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./App.css";
 //import { io } from "socket.io-client";
 
@@ -9,10 +9,14 @@ function App() {
   }, []);
 */
 
-  const [alpha, setAlpha] = useState(0);
-  const [beta, setBeta] = useState(0);
-  const [gamma, setGamma] = useState(0);
+  // const [alpha, setAlpha] = useState(0);
+  // const [beta, setBeta] = useState(0);
+  // const [gamma, setGamma] = useState(0);
   const [message, setMessage] = useState("");
+  const alpha = useRef(0);
+  const beta = useRef(0);
+  const gamma = useRef(0);
+
   //const [word, setWord] = useState("");
   // const [isinitial, setIsinitial] = useState(true);
 
@@ -33,10 +37,14 @@ function App() {
     if (betaValue === null || gammaValue === null) {
       setMessage("지원하지 않는 기기입니다");
     } else {
-      setAlpha(alphaValue);
-      setBeta(betaValue);
-      setGamma(gammaValue);
+      alpha.current = alphaValue;
+      beta.current = betaValue;
+      gamma.current = gammaValue;
     }
+
+    console.log(alpha.current);
+    console.log(beta.current);
+    console.log(gamma.current);
   };
 
   /*
@@ -107,9 +115,9 @@ function App() {
   return (
     <>
       <h1>Hello world</h1>
-      <p>알파_팽이: {alpha}</p>
-      <p>베타_넘어지기: {beta}</p>
-      <p>감마_뒤집기: {gamma}</p>
+      {/* <p>알파_팽이: {alpha}</p> */}
+      {/* <p>베타_넘어지기: {beta}</p> */}
+      {/* <p>감마_뒤집기: {gamma}</p> */}
       <p>{message}</p>
       {/* <p>{word}</p> */}
       {/* <p>{leftBorder}</p> */}
