@@ -125,7 +125,7 @@ function App() {
   };
 
   const handleMode = () => {
-    window.removeEventListener("deviceorientation", handleOrientation, false);
+    window.removeEventListener("deviceorientation", handleOrientation);
   };
 
   if (memory.length > 3) {
