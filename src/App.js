@@ -47,6 +47,10 @@ function App() {
       gamma.current = gammaValue;
     }
 
+    if (alpha.current > 180) {
+      alpha.current -= 361;
+    }
+
     if (status.current) {
       startX.current = alpha.current;
       startY.current = beta.current;
@@ -55,10 +59,6 @@ function App() {
 
     topBorder.current = startY.current + 15;
     bottomBorder.current = startY.current - 15;
-
-    if (alpha.current > 180) {
-      alpha.current -= 361;
-    }
 
     leftBorder.current = startX.current + 11;
     rightBorder.current = startX.current - 11;
