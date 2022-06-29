@@ -11,6 +11,7 @@ function App() {
 
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(true);
+  const [word, setWord] = useState("");
 
   const alpha = useRef(0);
   const beta = useRef(0);
@@ -22,7 +23,6 @@ function App() {
   const bottomBorder = useRef(0);
   // const leftBorder = useRef(0);
   // const rightBorder = useRef(0);
-  //const [word, setWord] = useState("");
 
   //let topBorder = startY - 100;
   //let bottomBorder = startY + 100;
@@ -57,6 +57,12 @@ function App() {
     console.log("뒤집기", gamma.current);
     console.log("탑바", topBorder.current);
     console.log("바텀바", bottomBorder.current);
+
+    if (beta.current < topBorder.current) {
+      setWord("상");
+    } else if (beta.current > bottomBorder.current) {
+      setWord("하");
+    }
   };
 
   /*
@@ -132,7 +138,7 @@ function App() {
       {/* <p>감마_뒤집기: {gamma}</p> */}
       <p>{message}</p>
       <p>{status}</p>
-      {/* <p>{word}</p> */}
+      <p>{word}</p>
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
