@@ -16,11 +16,15 @@ function App() {
   const alpha = useRef(0);
   const beta = useRef(0);
   const gamma = useRef(0);
+
   const startX = useRef(0);
   const startY = useRef(0);
 
   const topBorder = useRef(0);
   const bottomBorder = useRef(0);
+
+  const status2 = useRef(true);
+
   // const leftBorder = useRef(0);
   // const rightBorder = useRef(0);
 
@@ -62,6 +66,13 @@ function App() {
       setWord("상");
     } else if (beta.current > bottomBorder.current) {
       setWord("하");
+    } else {
+      status2.current = false;
+    }
+
+    if (status2.current) {
+      startX.current = alpha.current;
+      startY.current = beta.current;
     }
   };
 
@@ -137,7 +148,7 @@ function App() {
       {/* <p>베타_넘어지기: {beta}</p> */}
       {/* <p>감마_뒤집기: {gamma}</p> */}
       <p>{message}</p>
-      <p>{status}</p>
+      {status ? <p>트루</p> : <p>폴스</p>}
       <p>{word}</p>
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
