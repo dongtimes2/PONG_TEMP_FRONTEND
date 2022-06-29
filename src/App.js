@@ -58,10 +58,10 @@ function App() {
     bottomBorder.current = startY.current + 20;
 
     //console.log("팽이", alpha.current);
-    console.log("넘어지기", beta.current);
+    // console.log("넘어지기", beta.current);
     //console.log("뒤집기", gamma.current);
-    console.log("탑바", topBorder.current);
-    console.log("바텀바", bottomBorder.current);
+    // console.log("탑바", topBorder.current);
+    // console.log("바텀바", bottomBorder.current);
 
     if (beta.current < topBorder.current) {
       setWord("하");
@@ -78,7 +78,7 @@ function App() {
   };
 
   const handleMotion = (event) => {
-    console.log(event);
+    console.log(event.accelerationIncludingGravity);
   };
 
   const permission = () => {
@@ -98,7 +98,7 @@ function App() {
       } else {
         console.log("뒤");
         window.addEventListener("devicemotion", handleMotion);
-        window.addEventListener("deviceorientation", handleOrientation);
+        window.addEventListener("deviceorientation", handleOrientation, false);
       }
     } else {
       alert("지원하지 않는 기기입니다");
