@@ -10,7 +10,7 @@ function App() {
 */
 
   const [message, setMessage] = useState("");
-  const [word, setWord] = useState("");
+  // const [word, setWord] = useState("");
   const [memory, setMemory] = useState([]);
 
   const alpha = useRef(0);
@@ -62,16 +62,16 @@ function App() {
 
     if (beta.current > topBorder.current) {
       setMemory([...memory, "상"]);
-      setWord("상");
+      // setWord("상");
     } else if (beta.current < bottomBorder.current) {
       setMemory([...memory, "하"]);
-      setWord("하");
+      // setWord("하");
     } else if (alpha.current > leftBorder.current) {
       setMemory([...memory, "좌"]);
-      setWord("좌");
+      // setWord("좌");
     } else if (alpha.current < rightBorder.current) {
       setMemory([...memory, "우"]);
-      setWord("우");
+      // setWord("우");
     } else {
       status2.current = false;
     }
@@ -80,6 +80,8 @@ function App() {
       startX.current = alpha.current;
       startY.current = beta.current;
     }
+
+    console.log(memory);
   };
 
   const permission = () => {
@@ -121,7 +123,7 @@ function App() {
       {/* <p>베타_넘어지기: {beta}</p> */}
       {/* <p>감마_뒤집기: {gamma}</p> */}
       <p>{message}</p>
-      <h1>{word}</h1>
+      {/* <h1>{word}</h1> */}
       {/* <p>{leftBorder}</p> */}
       <button onClick={handleButtonClick}>버튼</button>
       <button onClick={handleViveClick}>진동버튼</button>
