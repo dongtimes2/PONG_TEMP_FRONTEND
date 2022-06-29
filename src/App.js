@@ -61,16 +61,16 @@ function App() {
     rightBorder.current = startX.current - 11;
 
     if (beta.current > topBorder.current) {
-      setMemory([...memory, "상"]);
+      setMemory((prev) => [...prev, "상"]);
       // setWord("상");
     } else if (beta.current < bottomBorder.current) {
-      setMemory([...memory, "하"]);
+      setMemory((prev) => [...prev, "하"]);
       // setWord("하");
     } else if (alpha.current > leftBorder.current) {
-      setMemory([...memory, "좌"]);
+      setMemory((prev) => [...prev, "좌"]);
       // setWord("좌");
     } else if (alpha.current < rightBorder.current) {
-      setMemory([...memory, "우"]);
+      setMemory((prev) => [...prev, "우"]);
       // setWord("우");
     } else {
       status2.current = false;
