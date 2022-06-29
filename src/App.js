@@ -48,8 +48,8 @@ function App() {
       status.current = false;
     }
 
-    topBorder.current = startY.current - 17;
-    bottomBorder.current = startY.current + 17;
+    topBorder.current = startY.current - 15;
+    bottomBorder.current = startY.current + 15;
 
     if (alpha.current > 180) {
       alpha.current -= 361;
@@ -58,14 +58,14 @@ function App() {
     leftBorder.current = startX.current + 11;
     rightBorder.current = startX.current - 11;
 
-    console.log("팽이", alpha.current); //344
-    // console.log("넘어지기", beta.current);
+    // console.log("팽이", alpha.current); //344
+    console.log("넘어지기", beta.current);
     //console.log("뒤집기", gamma.current);
-    // console.log("탑바", topBorder.current);
-    // console.log("바텀바", bottomBorder.current);
+    console.log("탑바", topBorder.current);
+    console.log("바텀바", bottomBorder.current);
 
-    console.log("레프트", leftBorder.current); //355
-    console.log("라이트", rightBorder.current); //333
+    // console.log("레프트", leftBorder.current); //355
+    // console.log("라이트", rightBorder.current); //333
 
     if (beta.current < topBorder.current) {
       setWord("하");
