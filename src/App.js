@@ -1,188 +1,87 @@
-import { useState, useRef, useCallback } from "react";
-import "./App.css";
-//import { io } from "socket.io-client";
+import { useEffect } from 'react';
+
+import { Route, Routes } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+
+import GlobalStyles from './components/GlobalStyles';
+import SocketEvent from './constants/socket';
+import Controller from './pages/Controller';
+import Game from './pages/Game';
+import Guides from './pages/Guides';
+import Lobby from './pages/Lobby';
+import Main from './pages/Main';
+import Settings from './pages/Settings';
+import settingState from './recoil/settingState';
+import userState from './recoil/userState';
+import { requestUserId, socket } from './utils/socketAPI';
 
 function App() {
-  /*
-  const socket = useMemo(() => {
-    return io(process.env.REACT_APP_SERVER_URL);
-  }, []);
-*/
+  const setUser = useSetRecoilState(userState);
+  const setSetting = useSetRecoilState(settingState);
 
-  const [message, setMessage] = useState("");
-  const [memory, setMemory] = useState([]);
+  useEffect(() => {
+    requestUserId();
 
-  const alpha = useRef(0);
-  const beta = useRef(0);
-  const gamma = useRef(0);
+    socket.on(SocketEvent.RECEIVE_USER_ID, (id) => {
+      setUser((prev) => {
+        return { ...prev, id };
+      });
+    });
 
-  const startX = useRef(0);
-  const startY = useRef(0);
+    socket.on(SocketEvent.RECEIVE_CONTROLLER_ID, (controllerId) => {
+      setUser((prev) => {
+        return { ...prev, controllerId };
+      });
 
-  const topBorder = useRef(0);
-  const bottomBorder = useRef(0);
-  const leftBorder = useRef(0);
-  const rightBorder = useRef(0);
+      setSetting((prev) => {
+        return { ...prev, isCheckingCompatibility: true };
+      });
+    });
 
-  const status = useRef(true);
-  const status2 = useRef(true);
+    socket.on(SocketEvent.REMOVE_CONTROLLER, () => {
+      setUser((prev) => {
+        return { ...prev, controllerId: '' };
+      });
 
-  const lastInput = useRef("");
+      setSetting((prev) => {
+        return {
+          ...prev,
+          isCheckingCompatibility: false,
+          isCompatible: false,
+          isCompletedMotionSettings: false,
+          left: 0,
+          right: 0,
+          forward: 0,
+        };
+      });
+    });
 
-  const handleOrientation = useCallback((event) => {
-    const alphaValue = parseInt(event.alpha);
-    const betaValue = parseInt(event.beta);
-    const gammaValue = parseInt(event.gamma);
-    status2.current = true;
+    socket.on(SocketEvent.CONTROLLER_CONNECTION_SUCCESS, () => {
+      setSetting((prev) => {
+        return { ...prev, isCheckingCompatibility: false, isCompatible: true };
+      });
+    });
 
-    if (isNaN(alphaValue || betaValue || gammaValue)) {
-      setMessage("지원하지 않는 기기입니다");
-    } else {
-      alpha.current = alphaValue;
-      beta.current = betaValue;
-      gamma.current = gammaValue;
-    }
-
-    if (alpha.current > 180) {
-      alpha.current -= 361;
-    }
-
-    if (status.current) {
-      startX.current = alpha.current;
-      startY.current = beta.current;
-      status.current = false;
-    }
-
-    topBorder.current = startY.current + 15;
-    bottomBorder.current = startY.current - 15;
-
-    leftBorder.current = startX.current + 11;
-    rightBorder.current = startX.current - 11;
-
-    if (beta.current > topBorder.current) {
-      if (lastInput.current !== "상") {
-        lastInput.current = "상";
-        setMemory((prev) => [...prev, "상"]);
-      }
-    } else if (beta.current < bottomBorder.current) {
-      if (lastInput.current !== "하") {
-        lastInput.current = "하";
-        setMemory((prev) => [...prev, "하"]);
-      }
-    } else if (alpha.current > leftBorder.current) {
-      if (lastInput.current !== "좌") {
-        lastInput.current = "좌";
-        setMemory((prev) => [...prev, "좌"]);
-      }
-    } else if (alpha.current < rightBorder.current) {
-      if (lastInput.current !== "우") {
-        lastInput.current = "우";
-        setMemory((prev) => [...prev, "우"]);
-      }
-    } else {
-      status2.current = false;
-    }
-
-    if (status2.current) {
-      startX.current = alpha.current;
-      startY.current = beta.current;
-    }
-  }, []);
-
-  const permission = () => {
-    if (typeof DeviceOrientationEvent !== "undefined") {
-      if (typeof DeviceOrientationEvent.requestPermission === "function") {
-        DeviceOrientationEvent.requestPermission().then((response) => {
-          if (response === "granted") {
-            window.addEventListener("deviceorientation", handleOrientation);
-          }
-        });
-      } else {
-        window.addEventListener("deviceorientation", handleOrientation);
-      }
-    } else {
-      alert("지원하지 않는 기기입니다");
-    }
-  };
-
-  const handleButtonClick = () => {
-    permission();
-  };
-
-  const handleViveClick = () => {
-    window.navigator.vibrate([
-      100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30,
-      100,
-    ]);
-  };
-
-  const reset = () => {
-    setMemory([]);
-  };
-
-  const handleMode = () => {
-    lastInput.current = "";
-    reset();
-
-    status.current = true;
-    window.removeEventListener("deviceorientation", handleOrientation);
-  };
-
-  if (memory.length >= 2) {
-    if (memory[0] === "상" && memory[1] === "우") {
-      setMessage("감지");
-    } else {
-      setMessage("");
-    }
-
-    reset();
-  }
+    socket.on(SocketEvent.CONTROLLER_CONNECTION_FAILURE, () => {
+      setSetting((prev) => {
+        return { ...prev, isCheckingCompatibility: false, isCompatible: false };
+      });
+    });
+  }, [setUser, setSetting]);
 
   return (
     <>
-      <h1>Hello world</h1>
-      {/* <p>알파_팽이: {alpha}</p> */}
-      {/* <p>베타_넘어지기: {beta}</p> */}
-      {/* <p>감마_뒤집기: {gamma}</p> */}
-      <p>{message}</p>
-      <button onClick={handleButtonClick}>버튼</button>
-      <button onClick={handleViveClick}>진동버튼</button>
-      <button onClick={reset}>클리어</button>
-      <button onClick={handleMode}>모드 변경</button>
-      {memory.map((element) => (
-        <p>{element}</p>
-      ))}
+      <GlobalStyles />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/guides" element={<Guides />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/controller/:userId" element={<Controller />} />
+        <Route path="/lobby" element={<Lobby />} />
+        <Route path="/game/:gameId" element={<Game />} />
+      </Routes>
     </>
   );
 }
 
 export default App;
-
-/*
-  if (alpha < leftBorder) {
-    setWord("왼");
-  } else if (alpha > rightBorder) {
-    setWord("오");
-  } else if (beta < topBorder) {
-    setWord("상");
-  } else if (beta > bottomBorder) {
-    setWord("하");
-  } else {
-    console.log();
-    //status = false;
-  }
-  /*
-  if (status) {
-    startX = alpha;
-    startY = beta;
-  }
-*/
-
-// console.log("팽이", alpha.current); //344
-// console.log("넘어지기", beta.current);
-//console.log("뒤집기", gamma.current);
-// console.log("탑바", topBorder.current);
-// console.log("바텀바", bottomBorder.current);
-
-// console.log("레프트", leftBorder.current); //355
-// console.log("라이트", rightBorder.current); //333
